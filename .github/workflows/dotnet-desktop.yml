@@ -73,7 +73,7 @@ jobs:
         dotnet-version: 5.0.x
         
     
-    - name: Setup Nuget.exe
+    - name: Setup Nuget.exe and add to PATH
       env: 
        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       uses: warrenbuckley/Setup-Nuget@v1
@@ -92,7 +92,7 @@ jobs:
 
      # Build the solution
     - name: Build the solution
-      run: msbuild $env:MVPTicTacToe.sln /p:Configuration=$env:Configuration
+      run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
         
@@ -103,7 +103,7 @@ jobs:
       
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: vstest.console.exe $env:UnitTestProject1\bin\${{ matrix.configuration }}\$env:UnitTestProject1.dll
+      run: vstest.console.exe $env:Test_Project_Directory\bin\${{ matrix.configuration }}\$env:Test_Project_Name.dll
 
     # Run DisableOutOfProcBuild.exe to allow the use of devenv.com out of process.
     - name: Make sure you can build installer project
